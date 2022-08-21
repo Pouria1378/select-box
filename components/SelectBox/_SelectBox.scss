@@ -1,0 +1,33 @@
+.selectBox {
+  @include boxShadow();
+  width: 300px;
+  border-radius: $borderRadius;
+  background-color: $white;
+  margin: 30px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+
+  .inputSelectBox {
+    border: 1px solid $gray;
+    border-radius: $borderRadius;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 5px;
+
+      input {
+        margin-right: 10px;
+      }
+    }
+  }
+}
