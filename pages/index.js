@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Select from '../components/select/select';
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home(props) {
+  console.log("Home => props", props);
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +13,9 @@ export default function Home() {
       </Head>
 
       <main>
-        hello world
+        <Select
+          data={props.data.slice(0, 200)}
+        />
       </main>
 
 
@@ -19,4 +23,18 @@ export default function Home() {
   )
 }
 
+export async function getServerSideProps(context) {
+  let data = []
+
+  await fetch("https://api.coinpaprika.com/v1/coins")
+    .then((response) => response.json())
+    .then(response => {
+      data = response
+    })
+    .catch(error => console.eror("error ", error))
+
+  return {
+    props: { data },
+  }
+}
 

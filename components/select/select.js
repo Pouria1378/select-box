@@ -1,6 +1,9 @@
 import React from 'react'
 
-const Select = () => {
+const Select = ({
+    data = []
+}) => {
+    console.log("Select => ", data);
     return (
         <div>Select</div>
     )
