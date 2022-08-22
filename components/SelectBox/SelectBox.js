@@ -10,6 +10,7 @@ const SelectBox = ({
 
     const [coinData, setCoinData] = useState([])
     const [filteredCoinData, setFilteredCoinData] = useState([])
+    const [selectedItems, setSelectedItems] = useState([])
 
     useEffect(() => {
         if (!data.length) return
@@ -21,8 +22,12 @@ const SelectBox = ({
         const filteredDataNotSelected = coinData.filter(coin => coin.checked !== true)
         const filteredDataSelected = coinData.filter(coin => coin.checked === true)
         setFilteredCoinData(filteredDataSelected.concat(filteredDataNotSelected))
-        getSelectedItems(filteredDataSelected)
+        setSelectedItems(filteredDataSelected)
     }, [coinData])
+
+    useEffect(() => {
+        getSelectedItems(selectedItems)
+    }, [selectedItems])
 
 
     const search = () => {
@@ -98,10 +103,13 @@ const SelectBox = ({
     return (
         <div id='SelectBoxWrapper' ref={ref}>
             <div
-                className='dropDown'
+                className={`dropDown ${selectedItems.length ? "active" : ""}`}
                 onClick={showHideSelect}
             >
                 {title}
+                <span>
+                    {selectedItems.length || ""}
+                </span>
             </div>
             <div
                 id="SelectBox"
@@ -119,11 +127,11 @@ const SelectBox = ({
                         (filteredCoinData || coinData || []).map(coin => (
                             <span
                                 key={coin.id}
+                                onClick={() => handleClick(coin)}
                             >
                                 <input
                                     type="checkbox"
                                     checked={coin.checked}
-                                    onChange={() => handleClick(coin)}
                                 />
                                 {coin.name}
                             </span>

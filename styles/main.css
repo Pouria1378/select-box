@@ -446,6 +446,22 @@ body {
   width: -moz-fit-content;
   width: fit-content;
 }
+#SelectBoxWrapper .active {
+  background-color: #2e5ea3;
+  color: white;
+}
+#SelectBoxWrapper .active span {
+  background-color: white;
+  color: #2e5ea3;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
 #SelectBoxWrapper .dropDown {
   width: 150px;
   border-radius: 23px;
@@ -453,6 +469,9 @@ body {
   margin: 50px;
   padding: 10px 15px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 #SelectBoxWrapper .selectBox {
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px rgba(0, 0, 0, 0.1411764706), 0 1px 10px rgba(0, 0, 0, 0.1215686275);

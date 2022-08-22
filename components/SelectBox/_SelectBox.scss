@@ -2,6 +2,24 @@
   position: relative;
   width: fit-content;
 
+  .active {
+    background-color: $blue;
+    color: white;
+
+    span {
+      background-color: white;
+      color: $blue;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 400;
+      font-size: 1.5rem;
+    }
+  }
+
   .dropDown {
     width: 150px;
     border-radius: 23px;
@@ -9,6 +27,9 @@
     margin: 50px;
     padding: 10px 15px;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .selectBox {
