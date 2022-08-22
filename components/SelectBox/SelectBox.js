@@ -7,6 +7,8 @@ const SelectBox = ({
     title = "select"
 }) => {
     const ref = useRef(null);
+    const inputRef = useRef(null);
+    const dropDownRef = useRef(null);
 
     const [coinData, setCoinData] = useState([])
     const [filteredCoinData, setFilteredCoinData] = useState([])
@@ -31,31 +33,20 @@ const SelectBox = ({
 
 
     const search = () => {
-        const input = document.getElementById("input");
-        const filter = input.value.toLowerCase();
-        const div = document.getElementById("SelectBox");
-        const a = div.getElementsByTagName("span");
+        const filter = inputRef.current.value.toLowerCase();
+        const options = dropDownRef.current.children
         let txtValue
-        for (let i = 0; i < a.length; i++) {
-            txtValue = a[i].textContent || a[i].innerText;
+        for (const option of options) {
+            txtValue = option.textContent || option.innerText;
             if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
+                option.style.display = "";
             } else {
-                a[i].style.display = "none";
+                option.style.display = "none";
             }
         }
     }
 
-    useEffect(() => {
-        // console.log('====================================');
-        // console.log("coinData", coinData);
-        // console.log('====================================');
-    }, [coinData])
-
     const handleClick = (selectedCoin) => {
-        // console.log('====================================');
-        // console.log("selectedCoin", selectedCoin);
-        // console.log('====================================');
         if (!selectedCoin.checked) {
             setCoinData(prev => {
                 return prev.map(coin => {
@@ -121,15 +112,16 @@ const SelectBox = ({
             <div
                 id="SelectBox"
                 className="selectBox"
+
             >
                 <input
                     type="text"
-                    placeholder="Search "
-                    id="input"
+                    placeholder="Search"
+                    ref={inputRef}
                     onKeyUp={search}
                     className="inputSelectBox"
                 />
-                <div className='options'>
+                <div className='options' ref={dropDownRef}>
                     {
                         (filteredCoinData || coinData || []).map(coin => (
                             <span

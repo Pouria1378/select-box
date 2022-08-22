@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react';
-import Select from '../components/SelectBox/SelectBox';
+import MultiSelectComponent from '../components/MultiSelectComponent/MultiSelectComponent';
+import OneSelectComponent from '../components/OneSelectComponent/OneSelectComponent';
 
 export default function Home(props) {
-  // console.log("Home => props", props);
   const [data, setData] = useState([])
 
   const sortByName = (a, b) => {
@@ -23,12 +23,6 @@ export default function Home(props) {
     setData(sortedData)
   }, [props.data])
 
-  const getSelectedItems = (selected) => {
-    // console.log('====================================');
-    // console.log("selected items in parent component", selected);
-    // console.log('====================================');
-  }
-
 
   return (
     <div>
@@ -38,11 +32,15 @@ export default function Home(props) {
       </Head>
 
       <main>
-        <Select
-          title='Industry'
+        <OneSelectComponent
+          title='OneSelectComponent'
           data={data}
-          getSelectedItems={getSelectedItems}
         />
+
+        {/* <MultiSelectComponent
+          title='MultiSelectComponent'
+          data={data}
+        /> */}
       </main>
     </div>
   )
