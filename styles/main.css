@@ -415,8 +415,26 @@ textarea {
   padding: 0.2em 0;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dcdcdc;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .selectBox {
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px rgba(0, 0, 0, 0.1411764706), 0 1px 10px rgba(0, 0, 0, 0.1215686275);
   width: 300px;
   border-radius: 4px;
   background-color: rgb(255, 255, 255);
@@ -424,6 +442,8 @@ textarea {
   padding: 15px;
   display: flex;
   flex-direction: column;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 .selectBox .inputSelectBox {
   border: 1px solid #949494;
@@ -441,6 +461,7 @@ textarea {
   justify-content: flex-start;
   margin-bottom: 5px;
   cursor: pointer;
+  color: #2b2b2b;
 }
 .selectBox .options span input {
   margin-right: 10px;

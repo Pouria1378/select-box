@@ -7,6 +7,8 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
+  max-height: 400px;
+  overflow-y: scroll;
 
   .inputSelectBox {
     border: 1px solid $gray;
@@ -25,6 +27,10 @@
       justify-content: flex-start;
       margin-bottom: 5px;
       cursor: pointer;
+      color: $itemsColor;
+
+      &:hover {
+      }
 
       input {
         margin-right: 10px;
