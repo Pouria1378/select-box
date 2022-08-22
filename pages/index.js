@@ -1,20 +1,12 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react';
+import { apiGetAllCoins } from '../api/apiCoins';
+import { sortByName } from '../components/functions';
 import MultiSelectComponent from '../components/MultiSelectComponent/MultiSelectComponent';
 import OneSelectComponent from '../components/OneSelectComponent/OneSelectComponent';
 
 export default function Home(props) {
   const [data, setData] = useState([])
-
-  const sortByName = (a, b) => {
-    if (a.name.toLowerCase() < b.name.toLowerCase()) {
-      return -1;
-    }
-    if (a.name.toLowerCase() > b.name.toLowerCase()) {
-      return 1;
-    }
-    return 0;
-  }
 
   useEffect(() => {
     if (!props.data.length) return
@@ -49,8 +41,7 @@ export default function Home(props) {
 export async function getServerSideProps(context) {
   let data = []
 
-  await fetch("https://api.coinpaprika.com/v1/coins")
-    .then((response) => response.json())
+  await apiGetAllCoins()
     .then(response => {
       data = response
     })

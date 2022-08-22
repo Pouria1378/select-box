@@ -133,6 +133,7 @@ const SelectBox = ({
                                 <input
                                     type="checkbox"
                                     checked={coin.checked}
+                                    onChange={() => { }}
                                 />
                                 {coin.name}
                             </span>
