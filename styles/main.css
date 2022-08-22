@@ -445,48 +445,68 @@ body {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-}
-#SelectBoxWrapper .active {
-  background-color: #2e5ea3;
-  color: white;
-}
-#SelectBoxWrapper .active span {
-  background-color: white;
-  color: #2e5ea3;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 400;
-  font-size: 1.5rem;
+  margin: 50px;
 }
 #SelectBoxWrapper .dropDown {
-  width: 150px;
-  border-radius: 23px;
+  min-width: 130px;
+  height: 15px;
+  border-radius: 20px;
   border: 1px solid #949494;
-  margin: 50px;
   padding: 10px 15px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+}
+#SelectBoxWrapper .dropDown .row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#SelectBoxWrapper .dropDown .dropDownIcon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: transparent;
+}
+#SelectBoxWrapper .dropDown .dropDownIcon::after {
+  content: "";
+  position: absolute;
+  display: block;
+  background-color: #2b2b2b;
+  height: 2px;
+  top: 45%;
+  left: 5px;
+  right: 5px;
+  transform: rotate(45deg);
+}
+#SelectBoxWrapper .dropDown .dropDownIcon::before {
+  content: "";
+  position: absolute;
+  display: block;
+  background-color: #2b2b2b;
+  width: 2px;
+  left: 77%;
+  top: 5px;
+  bottom: 5px;
+  transform: rotate(45deg);
 }
 #SelectBoxWrapper .selectBox {
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px rgba(0, 0, 0, 0.1411764706), 0 1px 10px rgba(0, 0, 0, 0.1215686275);
   width: 300px;
   border-radius: 4px;
   background-color: rgb(255, 255, 255);
-  margin: 30px;
   display: none;
   flex-direction: column;
   position: absolute;
-  top: 0;
-  left: 200px;
+  top: 40px;
+  left: 30px;
 }
 #SelectBoxWrapper .selectBox .inputSelectBox {
-  border: 1px solid #949494;
+  border: 2px solid #949494;
   border-radius: 4px;
   padding: 5px 10px;
   margin: 10px;
@@ -494,7 +514,7 @@ body {
 #SelectBoxWrapper .selectBox .options {
   display: flex;
   flex-direction: column;
-  max-height: 400px;
+  max-height: 260px;
   overflow-y: scroll;
 }
 #SelectBoxWrapper .selectBox .options span {
@@ -510,4 +530,29 @@ body {
 }
 #SelectBoxWrapper .selectBox .options span input {
   margin-right: 10px;
+  width: 15px;
+  height: 15px;
+}
+
+.active .dropDown {
+  background-color: #2e5ea3;
+  color: white;
+  border-color: #2e5ea3 !important;
+}
+.active .selectedBoxCount {
+  background-color: white;
+  color: #2e5ea3;
+  border-radius: 50%;
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin-right: 5px;
+}
+.active .dropDownIcon::before,
+.active .dropDownIcon::after {
+  background-color: rgb(255, 255, 255) !important;
 }/*# sourceMappingURL=main.css.map */

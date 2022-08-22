@@ -101,15 +101,22 @@ const SelectBox = ({
     }, [ref]);
 
     return (
-        <div id='SelectBoxWrapper' ref={ref}>
+        <div
+            id='SelectBoxWrapper'
+            ref={ref}
+            className={`${selectedItems.length ? "active" : ""}`}
+        >
             <div
-                className={`dropDown ${selectedItems.length ? "active" : ""}`}
+                className="dropDown"
                 onClick={showHideSelect}
             >
                 {title}
-                <span>
-                    {selectedItems.length || ""}
-                </span>
+                <div className='row'>
+                    <span className='selectedBoxCount'>
+                        {selectedItems.length || ""}
+                    </span>
+                    <span className='dropDownIcon' />
+                </div>
             </div>
             <div
                 id="SelectBox"

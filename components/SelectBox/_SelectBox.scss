@@ -1,35 +1,56 @@
 #SelectBoxWrapper {
   position: relative;
   width: fit-content;
-
-  .active {
-    background-color: $blue;
-    color: white;
-
-    span {
-      background-color: white;
-      color: $blue;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 400;
-      font-size: 1.5rem;
-    }
-  }
+  margin: 50px;
 
   .dropDown {
-    width: 150px;
-    border-radius: 23px;
+    min-width: 130px;
+    height: 15px;
+    border-radius: 20px;
     border: 1px solid $gray;
-    margin: 50px;
     padding: 10px 15px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .dropDownIcon {
+      width: 20px;
+      height: 20px;
+      position: relative;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: transparent;
+    }
+    .dropDownIcon::after {
+      content: "";
+      position: absolute;
+      display: block;
+      background-color: $black;
+      height: 2px;
+      top: 45%;
+      left: 5px;
+      right: 5px;
+      transform: rotate(45deg);
+    }
+    .dropDownIcon::before {
+      content: "";
+      position: absolute;
+      display: block;
+      background-color: $black;
+      width: 2px;
+      left: 77%;
+      top: 5px;
+      bottom: 5px;
+      transform: rotate(45deg);
+    }
   }
 
   .selectBox {
@@ -37,15 +58,14 @@
     width: 300px;
     border-radius: $borderRadius;
     background-color: $white;
-    margin: 30px;
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 0;
-    left: 200px;
+    top: 40px;
+    left: 30px;
 
     .inputSelectBox {
-      border: 1px solid $gray;
+      border: 2px solid $gray;
       border-radius: $borderRadius;
       padding: 5px 10px;
       margin: 10px;
@@ -54,7 +74,7 @@
     .options {
       display: flex;
       flex-direction: column;
-      max-height: 400px;
+      max-height: 260px;
       overflow-y: scroll;
 
       span {
@@ -71,8 +91,37 @@
 
         input {
           margin-right: 10px;
+          width: 15px;
+          height: 15px;
         }
       }
     }
+  }
+}
+
+.active {
+  .dropDown {
+    background-color: $blue;
+    color: white;
+    border-color: $blue !important;
+  }
+
+  .selectedBoxCount {
+    background-color: white;
+    color: $blue;
+    border-radius: 50%;
+    width: 21px;
+    height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    font-size: 1.2rem;
+    margin-right: 5px;
+  }
+
+  .dropDownIcon::before,
+  .dropDownIcon::after {
+    background-color: $white !important ;
   }
 }
