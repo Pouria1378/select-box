@@ -6,11 +6,19 @@ const SelectBox = ({
 }) => {
 
     const [coinData, setCoinData] = useState([])
+    const [filteredCoinData, setFilteredCoinData] = useState([])
 
     useEffect(() => {
         if (!data.length) return
         setCoinData(data.map(coin => ({ ...coin, checked: false })))
     }, [data])
+
+    useEffect(() => {
+        if (!coinData.length) return
+        const filteredDataNotSelected = coinData.filter(coin => coin.checked !== true)
+        const filteredDataSelected = coinData.filter(coin => coin.checked === true)
+        setFilteredCoinData(filteredDataSelected.concat(filteredDataNotSelected))
+    }, [coinData])
 
     const search = () => {
         const input = document.getElementById("input");
@@ -77,7 +85,7 @@ const SelectBox = ({
                 />
                 <div className='options'>
                     {
-                        (coinData || []).map(coin => (
+                        (filteredCoinData || coinData || []).map(coin => (
                             <span
                                 key={coin.id}
                                 onClick={() => {
