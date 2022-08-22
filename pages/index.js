@@ -23,6 +23,13 @@ export default function Home(props) {
     setData(sortedData)
   }, [props.data])
 
+  const getSelectedItems = (selected) => {
+    console.log('====================================');
+    console.log("selected items in parent component", selected);
+    console.log('====================================');
+  }
+
+
   return (
     <div>
       <Head>
@@ -33,6 +40,7 @@ export default function Home(props) {
       <main>
         <Select
           data={data}
+          getSelectedItems={getSelectedItems}
         />
       </main>
     </div>

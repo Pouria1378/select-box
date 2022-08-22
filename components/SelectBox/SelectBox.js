@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 const SelectBox = ({
     data = [],
-    multiSelect = true
+    multiSelect = true,
+    getSelectedItems = () => { }
 }) => {
 
     const [coinData, setCoinData] = useState([])
@@ -18,7 +19,9 @@ const SelectBox = ({
         const filteredDataNotSelected = coinData.filter(coin => coin.checked !== true)
         const filteredDataSelected = coinData.filter(coin => coin.checked === true)
         setFilteredCoinData(filteredDataSelected.concat(filteredDataNotSelected))
+        getSelectedItems(filteredDataSelected)
     }, [coinData])
+
 
     const search = () => {
         const input = document.getElementById("input");

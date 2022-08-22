@@ -440,21 +440,3 @@ textarea {
   color: #000;
   padding: 0.2em 0;
 }
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #ffffff;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #dcdcdc;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
