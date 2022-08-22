@@ -5,7 +5,12 @@ const SelectBox = ({
     multiSelect = true
 }) => {
 
-    const [selected, setSelected] = useState([])
+    const [coinData, setCoinData] = useState([])
+
+    useEffect(() => {
+        if (!data.length) return
+        setCoinData(data.map(coin => ({ ...coin, checked: false })))
+    }, [data])
 
     const search = () => {
         const input = document.getElementById("input");
@@ -25,9 +30,37 @@ const SelectBox = ({
 
     useEffect(() => {
         console.log('====================================');
-        console.log(selected);
+        console.log("coinData", coinData);
         console.log('====================================');
-    }, [selected])
+    }, [coinData])
+
+    const handleClick = (selectedCoin) => {
+        console.log('====================================');
+        console.log("selectedCoin", selectedCoin);
+        console.log('====================================');
+        if (!selectedCoin.checked) {
+            setCoinData(prev => {
+                return prev.map(coin => {
+                    if (coin.id === selectedCoin.id) {
+                        return { ...coin, checked: true }
+                    }
+
+                    if (multiSelect) return coin
+                    else return { ...coin, checked: false }
+                })
+            })
+
+        } else {
+            setCoinData(prev => {
+                return prev.map(coin => {
+                    if (coin.id === selectedCoin.id) {
+                        return { ...coin, checked: false }
+                    }
+                    return coin
+                })
+            })
+        }
+    }
 
     return (
         <div>
@@ -44,20 +77,16 @@ const SelectBox = ({
                 />
                 <div className='options'>
                     {
-                        data.map(coin => (
-                            <span key={coin.id}>
+                        (coinData || []).map(coin => (
+                            <span
+                                key={coin.id}
+                                onClick={() => {
+                                    handleClick(coin)
+                                }}
+                            >
                                 <input
-                                    onClick={(e) => {
-                                        if (e.target.checked) {
-                                            if (multiSelect) setSelected(prev => ([...prev, coin]))
-                                            else setSelected([coin])
-                                        } else {
-                                            setSelected(prev => prev.filter(selected => selected.id !== coin.id))
-                                        }
-
-
-                                    }}
                                     type="checkbox"
+                                    checked={coin.checked}
                                 />
                                 {coin.name}
                             </span>
