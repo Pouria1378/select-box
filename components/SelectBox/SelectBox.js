@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const SelectBox = ({
     data = [],
     multiSelect = true,
-    getSelectedItems = () => { }
+    getSelectedItems = () => { },
+    title = "select"
 }) => {
+    const ref = useRef(null);
 
     const [coinData, setCoinData] = useState([])
     const [filteredCoinData, setFilteredCoinData] = useState([])
@@ -40,15 +42,15 @@ const SelectBox = ({
     }
 
     useEffect(() => {
-        console.log('====================================');
-        console.log("coinData", coinData);
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log("coinData", coinData);
+        // console.log('====================================');
     }, [coinData])
 
     const handleClick = (selectedCoin) => {
-        console.log('====================================');
-        console.log("selectedCoin", selectedCoin);
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log("selectedCoin", selectedCoin);
+        // console.log('====================================');
         if (!selectedCoin.checked) {
             setCoinData(prev => {
                 return prev.map(coin => {
@@ -73,8 +75,34 @@ const SelectBox = ({
         }
     }
 
+    const showHideSelect = () => {
+        const selectBox = document.getElementById("SelectBox")
+        if (window.getComputedStyle(selectBox).display === "flex")
+            selectBox.style.display = "none"
+        else
+            selectBox.style.display = "flex"
+    }
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                document.getElementById("SelectBox").style.display = "none"
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+
     return (
-        <div>
+        <div id='SelectBoxWrapper' ref={ref}>
+            <div
+                className='dropDown'
+                onClick={showHideSelect}
+            >
+                {title}
+            </div>
             <div
                 id="SelectBox"
                 className="selectBox"
@@ -91,13 +119,11 @@ const SelectBox = ({
                         (filteredCoinData || coinData || []).map(coin => (
                             <span
                                 key={coin.id}
-                                onClick={() => {
-                                    handleClick(coin)
-                                }}
                             >
                                 <input
                                     type="checkbox"
                                     checked={coin.checked}
+                                    onChange={() => handleClick(coin)}
                                 />
                                 {coin.name}
                             </span>

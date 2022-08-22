@@ -1,39 +1,56 @@
-.selectBox {
-  @include boxShadow();
-  width: 300px;
-  border-radius: $borderRadius;
-  background-color: $white;
-  margin: 30px;
-  display: flex;
-  flex-direction: column;
+#SelectBoxWrapper {
+  position: relative;
+  width: fit-content;
 
-  .inputSelectBox {
+  .dropDown {
+    width: 150px;
+    border-radius: 23px;
     border: 1px solid $gray;
-    border-radius: $borderRadius;
-    padding: 5px 10px;
-    margin: 10px;
+    margin: 50px;
+    padding: 10px 15px;
+    cursor: pointer;
   }
 
-  .options {
-    display: flex;
+  .selectBox {
+    @include boxShadow();
+    width: 300px;
+    border-radius: $borderRadius;
+    background-color: $white;
+    margin: 30px;
+    display: none;
     flex-direction: column;
-    max-height: 400px;
-    overflow-y: scroll;
+    position: absolute;
+    top: 0;
+    left: 200px;
 
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      cursor: pointer;
-      color: $itemsColor;
+    .inputSelectBox {
+      border: 1px solid $gray;
+      border-radius: $borderRadius;
       padding: 5px 10px;
+      margin: 10px;
+    }
 
-      &:hover {
-        background-color: $hoverBackgroundColor;
-      }
+    .options {
+      display: flex;
+      flex-direction: column;
+      max-height: 400px;
+      overflow-y: scroll;
 
-      input {
-        margin-right: 10px;
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        cursor: pointer;
+        color: $itemsColor;
+        padding: 5px 10px;
+
+        &:hover {
+          background-color: $hoverBackgroundColor;
+        }
+
+        input {
+          margin-right: 10px;
+        }
       }
     }
   }

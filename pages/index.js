@@ -24,9 +24,9 @@ export default function Home(props) {
   }, [props.data])
 
   const getSelectedItems = (selected) => {
-    console.log('====================================');
-    console.log("selected items in parent component", selected);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log("selected items in parent component", selected);
+    // console.log('====================================');
   }
 
 
