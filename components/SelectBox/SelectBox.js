@@ -8,6 +8,7 @@ const SelectBox = ({
 }) => {
     const ref = useRef(null);
     const inputRef = useRef(null);
+    const optionsRef = useRef(null);
     const dropDownRef = useRef(null);
 
     const [coinData, setCoinData] = useState([])
@@ -34,7 +35,7 @@ const SelectBox = ({
 
     const search = () => {
         const filter = inputRef.current.value.toLowerCase();
-        const options = dropDownRef.current.children
+        const options = optionsRef.current.children
         let txtValue
         for (const option of options) {
             txtValue = option.textContent || option.innerText;
@@ -73,16 +74,16 @@ const SelectBox = ({
 
     const showHideSelect = () => {
         const selectBox = document.getElementById("SelectBox")
-        if (window.getComputedStyle(selectBox).display === "flex")
-            selectBox.style.display = "none"
+        if (window.getComputedStyle(dropDownRef.current).display === "flex")
+            dropDownRef.current.style.display = "none"
         else
-            selectBox.style.display = "flex"
+            dropDownRef.current.style.display = "flex"
     }
 
     useEffect(() => {
         function handleClickOutside(event) {
             if (ref.current && !ref.current.contains(event.target)) {
-                document.getElementById("SelectBox").style.display = "none"
+                dropDownRef.current.style.display = "none"
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
@@ -93,9 +94,8 @@ const SelectBox = ({
 
     return (
         <div
-            id='SelectBoxWrapper'
             ref={ref}
-            className={`${selectedItems.length ? "active" : ""}`}
+            className={`SelectBoxWrapper ${selectedItems.length ? "active" : ""}`}
         >
             <div
                 className="dropDown"
@@ -110,9 +110,8 @@ const SelectBox = ({
                 </div>
             </div>
             <div
-                id="SelectBox"
                 className="selectBox"
-
+                ref={dropDownRef}
             >
                 <input
                     type="text"
@@ -121,7 +120,10 @@ const SelectBox = ({
                     onKeyUp={search}
                     className="inputSelectBox"
                 />
-                <div className='options' ref={dropDownRef}>
+                <div
+                    className='options'
+                    ref={optionsRef}
+                >
                     {
                         (filteredCoinData || coinData || []).map(coin => (
                             <span

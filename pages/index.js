@@ -33,14 +33,14 @@ export default function Home(props) {
 
       <main>
         <OneSelectComponent
-          title='OneSelectComponent'
+          title='Industry'
           data={data}
         />
 
-        {/* <MultiSelectComponent
-          title='MultiSelectComponent'
+        <MultiSelectComponent
+          title='location'
           data={data}
-        /> */}
+        />
       </main>
     </div>
   )

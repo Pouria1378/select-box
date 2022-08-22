@@ -10,12 +10,17 @@ const MultiSelectComponent = ({ title, data }) => {
     }
 
     return (
-        <SelectBox
-            title={title}
-            data={data}
-            multiSelect={true}
-            getSelectedItems={getSelectedItems}
-        />
+        <div> 
+            <h1>
+                MultiSelectComponent
+            </h1>
+            <SelectBox
+                title={title}
+                data={data}
+                multiSelect={true}
+                getSelectedItems={getSelectedItems}
+            />
+        </div>
     )
 }
 

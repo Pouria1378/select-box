@@ -10,12 +10,17 @@ const OneSelectComponent = ({ title, data }) => {
     }
 
     return (
-        <SelectBox
-            title={title}
-            data={data}
-            multiSelect={false}
-            getSelectedItems={getSelectedItems}
-        />
+        <div>
+            <h1>
+                OneSelectComponent
+            </h1>
+            <SelectBox
+                title={title}
+                data={data}
+                multiSelect={false}
+                getSelectedItems={getSelectedItems}
+            />
+        </div>
     )
 }
 
