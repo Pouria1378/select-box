@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 
 const SelectBox = ({
-    data = [],
-    multiSelect = true,
-    getSelectedItems = () => { },
-    title = "select"
+    data,
+    multiSelect,
+    getSelectedItems,
+    title
 }) => {
     const ref = useRef(null);
     const inputRef = useRef(null);
@@ -143,6 +144,20 @@ const SelectBox = ({
             </div>
         </div>
     )
+}
+
+SelectBox.prototype = {
+    data: PropTypes.array.isRequired,
+    multiSelect: PropTypes.bool,
+    getSelectedItems: PropTypes.func,
+    title: PropTypes.string,
+}
+
+SelectBox.defaultProps = {
+    data: [],
+    multiSelect: true,
+    getSelectedItems: () => { },
+    title: "select"
 }
 
 export default SelectBox

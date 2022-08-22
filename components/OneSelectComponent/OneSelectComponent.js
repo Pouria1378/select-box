@@ -1,5 +1,6 @@
 import React from 'react'
 import SelectBox from '../SelectBox/SelectBox'
+import PropTypes from 'prop-types'
 
 const OneSelectComponent = ({ title, data }) => {
 
@@ -22,6 +23,16 @@ const OneSelectComponent = ({ title, data }) => {
             />
         </div>
     )
+}
+
+OneSelectComponent.prototype = {
+    title: PropTypes.string.isRequired,
+    data: PropTypes.array.isRequired
+}
+
+OneSelectComponent.defaultProps = {
+    title: "search",
+    data: []
 }
 
 export default OneSelectComponent

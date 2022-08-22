@@ -1,5 +1,6 @@
 import React from 'react'
 import SelectBox from '../SelectBox/SelectBox'
+import PropTypes from 'prop-types'
 
 const MultiSelectComponent = ({ title, data }) => {
 
@@ -10,7 +11,7 @@ const MultiSelectComponent = ({ title, data }) => {
     }
 
     return (
-        <div> 
+        <div>
             <h1>
                 MultiSelectComponent
             </h1>
@@ -22,6 +23,16 @@ const MultiSelectComponent = ({ title, data }) => {
             />
         </div>
     )
+}
+
+MultiSelectComponent.prototype = {
+    title: PropTypes.string.isRequired,
+    data: PropTypes.array.isRequired
+}
+
+MultiSelectComponent.defaultProps = {
+    title: "search",
+    data: []
 }
 
 export default MultiSelectComponent
