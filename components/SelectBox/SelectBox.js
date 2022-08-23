@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { sortByName } from '../functions';
+import { sortByChecked, sortByName } from '../functions';
 
 const SelectBox = ({
     data,
@@ -17,19 +17,26 @@ const SelectBox = ({
 
     useEffect(() => {
         if (!data.length) return
+        // after data props change add checked:false property for default value of input checkbox 
         const addCheckedData = data.map(coin => ({ ...coin, checked: false }))
+        // setstate in dropDownData for save data with checked in whole program
         setdropDownData(addCheckedData)
+        // setstate default value searchState state that show in drop down before type anything
         setSearchState(addCheckedData)
     }, [data])
 
     useEffect(() => {
         if (!dropDownData.length) return
-        const filteredDataSelected = dropDownData.filter(coin => coin.checked === true)
-        setSearchState(searchState.sort(sortByName).sort((a, b) => Number(b.checked) - Number(a.checked)))
-        setSelectedItems(filteredDataSelected)
+        // after click on check box dropDownData will change and this useeffect will work here we sort fltered data
+        // in searchState first by name (in case that uncheck an element it should remove from first of array) 
+        // and then by checked property 
+        setSearchState(searchState.sort(sortByName).sort(sortByChecked))
+        // setstate selectedItems for fun. that need these items
+        setSelectedItems(dropDownData.filter(coin => coin.checked === true))
     }, [dropDownData])
 
     useEffect(() => {
+        // after setSelectedItems called this useeffect will work and pass data to getSelectedItems fun. from parent
         getSelectedItems(selectedItems)
     }, [selectedItems])
 
@@ -37,6 +44,8 @@ const SelectBox = ({
 
     const handleClick = (selectedOption) => {
         if (selectedOption.checked) {
+            // when clicked on input type checkbox
+            // first update dropDownData that store all data in 
             setdropDownData(prev =>
                 prev.map(coin =>
                     coin.id === selectedOption.id
@@ -44,6 +53,7 @@ const SelectBox = ({
                         : coin
                 ))
 
+            // second update setSearchState that store filtered data by input
             setSearchState(prev =>
                 prev.map(coin =>
                     coin.id === selectedOption.id
@@ -51,25 +61,25 @@ const SelectBox = ({
                         : coin)
             )
         } else {
+            // first update dropDownData that store all data in 
             setdropDownData(prev => {
                 return prev.map(coin => {
                     if (coin.id === selectedOption.id) {
                         return { ...coin, checked: true }
                     }
 
-                    if (multiSelect) return coin
-                    return { ...coin, checked: false }
+                    return multiSelect ? coin : ({ ...coin, checked: false })
                 })
             })
 
+            // second update setSearchState that store filtered data by input
             setSearchState(prev => {
                 return prev.map(coin => {
                     if (coin.id === selectedOption.id) {
                         return { ...coin, checked: true }
                     }
 
-                    if (multiSelect) return coin
-                    return { ...coin, checked: false }
+                    return multiSelect ? coin : ({ ...coin, checked: false })
                 })
             })
         }
@@ -78,22 +88,30 @@ const SelectBox = ({
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (selectBoxWrapperRef.current && !selectBoxWrapperRef.current.contains(event.target)) {
+                // when user click outside our component the drop down will close
                 dropDownRef.current.style.display = "none"
             }
         }
+        // add our fun. to event listener mousedown
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
+            // in clean up function we remove event listener
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [selectBoxWrapperRef]);
 
     const search = (value = "") => {
-        setSearchState(dropDownData.filter(item =>
-            (item.name.toLowerCase()).search(value.toLowerCase()) >= 0 ? item : null)
+        // after we find similar data with input by filter fun. we will sort it by checked to show checked at first of 
+        // list
+        setSearchState(
+            dropDownData.filter(item =>
+                (item.name.toLowerCase()).search(value.toLowerCase()) >= 0 ? item : null)
+                .sort(sortByChecked)
         )
     }
 
     const showHideComponent = (ref) => {
+        // change display of component when click on select element 
         ref.current.style.display = ref.current.style.display === "flex" ? "none" : "flex"
     }
 
@@ -131,7 +149,7 @@ const SelectBox = ({
                         (searchState).map(coin => (
                             <label
                                 key={coin.id}
-                                forHtml={coin.id}
+                                forhtml={coin.id}
                             >
                                 <input
                                     id={coin.id}

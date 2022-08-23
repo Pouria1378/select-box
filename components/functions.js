@@ -7,3 +7,5 @@ export const sortByName = (a, b) => {
     }
     return 0;
 }
+
+export const sortByChecked = (a, b) => Number(b.checked) - Number(a.checked)
