@@ -17,6 +17,7 @@ const SelectBox = ({
     useEffect(() => {
         if (!data.length) return
         // after data props change add checked:false property for default value of input checkbox 
+        // show property defines that an option is similar to input and show it or it is not similar and hide it
         const addCheckedData = data.map(coin => ({ ...coin, checked: false, show: true }))
         // setstate in dropDownData for save data with checked in whole program
         setdropDownData(addCheckedData)

@@ -515,7 +515,7 @@ main {
   z-index: 10;
 }
 .SelectBoxWrapper .dropDown .inputDropDown {
-  border: 2px solid #949494;
+  border: 1px solid #949494;
   border-radius: 4px;
   padding: 5px 10px;
   margin: 10px;
