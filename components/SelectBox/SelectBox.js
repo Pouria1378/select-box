@@ -134,22 +134,23 @@ const SelectBox = ({
                     className='options'
                 >
                     {
-                        (dropDownData || []).map(item => item.show ?
-                            (
-                                <label
-                                    key={item.id}
-                                    forhtml={item.id}
-                                >
-                                    <input
-                                        id={item.id}
-                                        type="checkbox"
-                                        checked={item.checked}
-                                        onChange={() => handleClick(item)}
-                                    />
-                                    {item.name}
-                                </label>
-                            )
-                            : <React.Fragment />
+                        (dropDownData).map(item =>
+                            item.show ?
+                                (
+                                    <label
+                                        key={item.id}
+                                        forhtml={item.id}
+                                    >
+                                        <input
+                                            id={item.id}
+                                            type="checkbox"
+                                            checked={item.checked}
+                                            onChange={() => handleClick(item)}
+                                        />
+                                        {item.name}
+                                    </label>
+                                )
+                                : <React.Fragment />
                         )
                     }
                 </div>
