@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import { search, showHideComponent } from '../functions';
 
 const SelectBox = ({
     data,
@@ -8,49 +9,35 @@ const SelectBox = ({
     title
 }) => {
     const SelectBoxWrapperRef = useRef(null);
-    const inputRef = useRef(null);
+    const dropDownInputRef = useRef(null);
     const optionsRef = useRef(null);
     const dropDownRef = useRef(null);
 
-    const [coinData, setCoinData] = useState([])
-    const [filteredCoinData, setFilteredCoinData] = useState([])
+    const [dropDownData, setdropDownData] = useState([])
+    const [filteredDropDownData, setFilteredDropDownData] = useState([])
     const [selectedItems, setSelectedItems] = useState([])
 
     useEffect(() => {
         if (!data.length) return
-        setCoinData(data.map(coin => ({ ...coin, checked: false })))
+        setdropDownData(data.map(coin => ({ ...coin, checked: false })))
     }, [data])
 
     useEffect(() => {
-        if (!coinData.length) return
-        const filteredDataNotSelected = coinData.filter(coin => coin.checked !== true)
-        const filteredDataSelected = coinData.filter(coin => coin.checked === true)
-        setFilteredCoinData(filteredDataSelected.concat(filteredDataNotSelected))
+        if (!dropDownData.length) return
+        const filteredDataNotSelected = dropDownData.filter(coin => coin.checked !== true)
+        const filteredDataSelected = dropDownData.filter(coin => coin.checked === true)
+        setFilteredDropDownData(filteredDataSelected.concat(filteredDataNotSelected))
         setSelectedItems(filteredDataSelected)
-    }, [coinData])
+    }, [dropDownData])
 
     useEffect(() => {
         getSelectedItems(selectedItems)
     }, [selectedItems])
 
 
-    const search = () => {
-        const filter = inputRef.current.value.toLowerCase();
-        const options = optionsRef.current.children
-        let txtValue
-        for (const option of options) {
-            txtValue = option.textContent || option.innerText;
-            if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                option.style.display = "";
-            } else {
-                option.style.display = "none";
-            }
-        }
-    }
-
     const handleClick = (selectedCoin) => {
         if (!selectedCoin.checked) {
-            setCoinData(prev => {
+            setdropDownData(prev => {
                 return prev.map(coin => {
                     if (coin.id === selectedCoin.id) {
                         return { ...coin, checked: true }
@@ -62,7 +49,7 @@ const SelectBox = ({
             })
 
         } else {
-            setCoinData(prev => {
+            setdropDownData(prev => {
                 return prev.map(coin => {
                     if (coin.id === selectedCoin.id) {
                         return { ...coin, checked: false }
@@ -73,15 +60,8 @@ const SelectBox = ({
         }
     }
 
-    const showHideSelect = () => {
-        if (window.getComputedStyle(dropDownRef.current).display === "flex")
-            dropDownRef.current.style.display = "none"
-        else
-            dropDownRef.current.style.display = "flex"
-    }
-
     useEffect(() => {
-        function handleClickOutside(event) {
+        const handleClickOutside = (event) => {
             if (SelectBoxWrapperRef.current && !SelectBoxWrapperRef.current.contains(event.target)) {
                 dropDownRef.current.style.display = "none"
             }
@@ -99,7 +79,7 @@ const SelectBox = ({
         >
             <div
                 className="selectBox"
-                onClick={showHideSelect}
+                onClick={() => showHideComponent(dropDownRef)}
             >
                 {title}
                 <div className='row'>
@@ -116,8 +96,8 @@ const SelectBox = ({
                 <input
                     type="text"
                     placeholder={`Search ${title}`}
-                    ref={inputRef}
-                    onKeyUp={search}
+                    ref={dropDownInputRef}
+                    onKeyUp={() => search(dropDownInputRef, optionsRef)}
                     className="inputDropDown"
                 />
                 <div
@@ -125,7 +105,7 @@ const SelectBox = ({
                     ref={optionsRef}
                 >
                     {
-                        (filteredCoinData || coinData || []).map(coin => (
+                        (filteredDropDownData || dropDownData || []).map(coin => (
                             <span
                                 key={coin.id}
                                 onClick={() => handleClick(coin)}
