@@ -118,16 +118,20 @@ const SelectBox = ({
     return (
         <div
             ref={selectBoxWrapperRef}
-            className={`SelectBoxWrapper ${selectedItems.length ? "active" : ""}`}
+            className={`SelectBoxWrapper ${selectedItems.length > 1 ? "active" : ""}`}
         >
             <div
                 className="selectBox"
                 onClick={() => showHideComponent(dropDownRef)}
             >
-                {title}
+                {
+                    selectedItems.length === 1
+                        ? selectedItems[0].name
+                        : title
+                }
                 <div className='row'>
                     <span className='selectedBoxCount'>
-                        {selectedItems.length || ""}
+                        {selectedItems.length > 1 && selectedItems.length || ""}
                     </span>
                     <span className='selectBoxIcon' />
                 </div>
