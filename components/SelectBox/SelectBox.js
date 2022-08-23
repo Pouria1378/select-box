@@ -60,8 +60,10 @@ const SelectBox = ({
                     .sort(sortByChecked)
             })
 
-            // setState SelectedItems and add new selected item from selected items
-            setSelectedItems(prev => ([...prev, selectedOption]))
+            // setState SelectedItems and add new selected item base on multiSelect
+            multiSelect
+                ? setSelectedItems(prev => ([...prev, selectedOption]))
+                : setSelectedItems([selectedOption])
         }
     }
 
