@@ -7,7 +7,7 @@ const SelectBox = ({
     getSelectedItems,
     title
 }) => {
-    const ref = useRef(null);
+    const SelectBoxWrapperRef = useRef(null);
     const inputRef = useRef(null);
     const optionsRef = useRef(null);
     const dropDownRef = useRef(null);
@@ -74,7 +74,6 @@ const SelectBox = ({
     }
 
     const showHideSelect = () => {
-        const selectBox = document.getElementById("SelectBox")
         if (window.getComputedStyle(dropDownRef.current).display === "flex")
             dropDownRef.current.style.display = "none"
         else
@@ -83,7 +82,7 @@ const SelectBox = ({
 
     useEffect(() => {
         function handleClickOutside(event) {
-            if (ref.current && !ref.current.contains(event.target)) {
+            if (SelectBoxWrapperRef.current && !SelectBoxWrapperRef.current.contains(event.target)) {
                 dropDownRef.current.style.display = "none"
             }
         }
@@ -91,15 +90,15 @@ const SelectBox = ({
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [ref]);
+    }, [SelectBoxWrapperRef]);
 
     return (
         <div
-            ref={ref}
+            ref={SelectBoxWrapperRef}
             className={`SelectBoxWrapper ${selectedItems.length ? "active" : ""}`}
         >
             <div
-                className="dropDown"
+                className="selectBox"
                 onClick={showHideSelect}
             >
                 {title}
@@ -107,19 +106,19 @@ const SelectBox = ({
                     <span className='selectedBoxCount'>
                         {selectedItems.length || ""}
                     </span>
-                    <span className='dropDownIcon' />
+                    <span className='selectBoxIcon' />
                 </div>
             </div>
             <div
-                className="selectBox"
+                className="dropDown"
                 ref={dropDownRef}
             >
                 <input
                     type="text"
-                    placeholder="Search"
+                    placeholder={`Search ${title}`}
                     ref={inputRef}
                     onKeyUp={search}
-                    className="inputSelectBox"
+                    className="inputDropDown"
                 />
                 <div
                     className='options'

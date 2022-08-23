@@ -2,7 +2,7 @@
   position: relative;
   width: fit-content;
 
-  .dropDown {
+  .selectBox {
     min-width: 130px;
     height: 15px;
     border-radius: 20px;
@@ -20,7 +20,7 @@
       align-items: center;
     }
 
-    .dropDownIcon {
+    .selectBoxIcon {
       width: 20px;
       height: 20px;
       position: relative;
@@ -28,7 +28,7 @@
       cursor: pointer;
       background-color: transparent;
     }
-    .dropDownIcon::after {
+    .selectBoxIcon::after {
       content: "";
       position: absolute;
       display: block;
@@ -39,7 +39,7 @@
       right: 5px;
       transform: rotate(45deg);
     }
-    .dropDownIcon::before {
+    .selectBoxIcon::before {
       content: "";
       position: absolute;
       display: block;
@@ -52,7 +52,7 @@
     }
   }
 
-  .selectBox {
+  .dropDown {
     @include boxShadow();
     width: 300px;
     border-radius: $borderRadius;
@@ -64,7 +64,7 @@
     left: 30px;
     z-index: 10;
 
-    .inputSelectBox {
+    .inputDropDown {
       border: 2px solid $gray;
       border-radius: $borderRadius;
       padding: 5px 10px;
@@ -100,7 +100,7 @@
 }
 
 .active {
-  .dropDown {
+  .selectBox {
     background-color: $blue;
     color: white;
     border-color: $blue !important;
