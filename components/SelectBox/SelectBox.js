@@ -12,27 +12,19 @@ const SelectBox = ({
     const dropDownRef = useRef(null);
 
     const [dropDownData, setdropDownData] = useState([])
-    const [searchState, setSearchState] = useState([])
     const [selectedItems, setSelectedItems] = useState([])
 
     useEffect(() => {
         if (!data.length) return
         // after data props change add checked:false property for default value of input checkbox 
-        const addCheckedData = data.map(coin => ({ ...coin, checked: false }))
+        const addCheckedData = data.map(coin => ({ ...coin, checked: false, show: true }))
         // setstate in dropDownData for save data with checked in whole program
         setdropDownData(addCheckedData)
-        // setstate default value searchState state that show in drop down before type anything
-        setSearchState(addCheckedData)
     }, [data])
 
     useEffect(() => {
-        if (!dropDownData.length) return
-        // after click on check box dropDownData will change and this useeffect will work here we sort fltered data
-        // in searchState first by name (in case that uncheck an element it should remove from first of array) 
-        // and then by checked property 
-        setSearchState(searchState.sort(sortByName).sort(sortByChecked))
         // setstate selectedItems for fun. that need these items
-        setSelectedItems(dropDownData.filter(coin => coin.checked === true))
+        setSelectedItems(dropDownData.filter(coin => coin.checked))
     }, [dropDownData])
 
     useEffect(() => {
@@ -51,15 +43,8 @@ const SelectBox = ({
                     coin.id === selectedOption.id
                         ? ({ ...coin, checked: false })
                         : coin
-                ))
+                ).sort(sortByName).sort(sortByChecked))
 
-            // second update setSearchState that store filtered data by input
-            setSearchState(prev =>
-                prev.map(coin =>
-                    coin.id === selectedOption.id
-                        ? ({ ...coin, checked: false })
-                        : coin)
-            )
         } else {
             // first update dropDownData that store all data in 
             setdropDownData(prev => {
@@ -69,18 +54,7 @@ const SelectBox = ({
                     }
 
                     return multiSelect ? coin : ({ ...coin, checked: false })
-                })
-            })
-
-            // second update setSearchState that store filtered data by input
-            setSearchState(prev => {
-                return prev.map(coin => {
-                    if (coin.id === selectedOption.id) {
-                        return { ...coin, checked: true }
-                    }
-
-                    return multiSelect ? coin : ({ ...coin, checked: false })
-                })
+                }).sort(sortByChecked)
             })
         }
     }
@@ -103,11 +77,12 @@ const SelectBox = ({
     const search = (value = "") => {
         // after we find similar data with input by filter fun. we will sort it by checked to show checked at first of 
         // list
-        setSearchState(
-            dropDownData.filter(item =>
-                (item.name.toLowerCase()).search(value.toLowerCase()) >= 0 ? item : null)
-                .sort(sortByChecked)
-        )
+
+        setdropDownData(dropDownData.map(item =>
+            item.name.toLowerCase().search(value.toLowerCase()) >= 0
+                ? { ...item, show: true }
+                : { ...item, show: false }
+        ))
     }
 
     const showHideComponent = (ref) => {
@@ -150,20 +125,23 @@ const SelectBox = ({
                     className='options'
                 >
                     {
-                        (searchState).map(coin => (
-                            <label
-                                key={coin.id}
-                                forhtml={coin.id}
-                            >
-                                <input
-                                    id={coin.id}
-                                    type="checkbox"
-                                    checked={coin.checked}
-                                    onChange={() => handleClick(coin)}
-                                />
-                                {coin.name}
-                            </label>
-                        ))
+                        (dropDownData || []).map(item => item.show ?
+                            (
+                                <label
+                                    key={item.id}
+                                    forhtml={item.id}
+                                >
+                                    <input
+                                        id={item.id}
+                                        type="checkbox"
+                                        checked={item.checked}
+                                        onChange={() => handleClick(item)}
+                                    />
+                                    {item.name}
+                                </label>
+                            )
+                            : <React.Fragment />
+                        )
                     }
                 </div>
             </div>
