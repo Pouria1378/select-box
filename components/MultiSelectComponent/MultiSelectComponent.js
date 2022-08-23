@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 const MultiSelectComponent = ({ title, data }) => {
 
     const getSelectedItems = (selectedItems) => {
-        console.log('====================================');
-        console.log("selectedItems from MultiSelectComponent", selectedItems);
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log("selectedItems from MultiSelectComponent", selectedItems);
+        // console.log('====================================');
     }
 
     return (

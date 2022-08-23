@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { showHideComponent } from '../functions';
+import { sortByName } from '../functions';
 
 const SelectBox = ({
     data,
@@ -9,24 +9,23 @@ const SelectBox = ({
     title
 }) => {
     const SelectBoxWrapperRef = useRef(null);
-    const dropDownInputRef = useRef(null);
-    const optionsRef = useRef(null);
     const dropDownRef = useRef(null);
 
     const [dropDownData, setdropDownData] = useState([])
-    const [filteredDropDownData, setFilteredDropDownData] = useState([])
+    const [searchState, setSearchState] = useState([])
     const [selectedItems, setSelectedItems] = useState([])
 
     useEffect(() => {
         if (!data.length) return
-        setdropDownData(data.map(coin => ({ ...coin, checked: false })))
+        const addCheckedData = data.map(coin => ({ ...coin, checked: false }))
+        setdropDownData(addCheckedData)
+        setSearchState(addCheckedData)
     }, [data])
 
     useEffect(() => {
         if (!dropDownData.length) return
-        const filteredDataNotSelected = dropDownData.filter(coin => coin.checked !== true)
         const filteredDataSelected = dropDownData.filter(coin => coin.checked === true)
-        setFilteredDropDownData(filteredDataSelected.concat(filteredDataNotSelected))
+        setSearchState(searchState.sort(sortByName).sort((a, b) => Number(b.checked) - Number(a.checked)))
         setSelectedItems(filteredDataSelected)
     }, [dropDownData])
 
@@ -34,13 +33,28 @@ const SelectBox = ({
         getSelectedItems(selectedItems)
     }, [selectedItems])
 
-    useEffect(() => {
-        console.log("filteredDropDownData", filteredDropDownData);
-    }, [filteredDropDownData])
 
 
     const handleClick = (selectedCoin) => {
-        if (!selectedCoin.checked) {
+        if (selectedCoin.checked) {
+            setdropDownData(prev => {
+                return prev.map(coin => {
+                    if (coin.id === selectedCoin.id) {
+                        return { ...coin, checked: false }
+                    }
+                    return coin
+                })
+            })
+
+            setSearchState(prev => {
+                return prev.map(coin => {
+                    if (coin.id === selectedCoin.id) {
+                        return { ...coin, checked: false }
+                    }
+                    return coin
+                })
+            })
+        } else {
             setdropDownData(prev => {
                 return prev.map(coin => {
                     if (coin.id === selectedCoin.id) {
@@ -52,13 +66,14 @@ const SelectBox = ({
                 })
             })
 
-        } else {
-            setdropDownData(prev => {
+            setSearchState(prev => {
                 return prev.map(coin => {
                     if (coin.id === selectedCoin.id) {
-                        return { ...coin, checked: false }
+                        return { ...coin, checked: true }
                     }
-                    return coin
+
+                    if (multiSelect) return coin
+                    else return { ...coin, checked: false }
                 })
             })
         }
@@ -76,8 +91,14 @@ const SelectBox = ({
         };
     }, [SelectBoxWrapperRef]);
 
-    const search = (value) => {
-        setFilteredDropDownData(dropDownData.filter(item => (item.name.toLowerCase()).search(value.toLowerCase()) >= 0 ? item : null))
+    const search = (value = "") => {
+        setSearchState(dropDownData.filter(item =>
+            (item.name.toLowerCase()).search(value.toLowerCase()) >= 0 ? item : null)
+        )
+    }
+
+    const showHideComponent = (ref) => {
+        ref.current.style.display = ref.current.style.display === "flex" ? "none" : "flex"
     }
 
     return (
@@ -104,27 +125,26 @@ const SelectBox = ({
                 <input
                     type="text"
                     placeholder={`Search ${title}`}
-                    ref={dropDownInputRef}
                     onChange={(e) => search(e.target.value)}
                     className="inputDropDown"
                 />
                 <div
                     className='options'
-                    ref={optionsRef}
                 >
                     {
-                        (filteredDropDownData || dropDownData || []).map(coin => (
-                            <span
+                        (searchState).map(coin => (
+                            <label
                                 key={coin.id}
-                                onClick={() => handleClick(coin)}
+                                forHtml={coin.id}
                             >
                                 <input
+                                    id={coin.id}
                                     type="checkbox"
                                     checked={coin.checked}
-                                    onChange={() => { }}
+                                    onChange={() => handleClick(coin)}
                                 />
                                 {coin.name}
-                            </span>
+                            </label>
                         ))
                     }
                 </div>

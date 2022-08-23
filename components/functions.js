@@ -7,8 +7,3 @@ export const sortByName = (a, b) => {
     }
     return 0;
 }
-
-
-export const showHideComponent = (ref) => {
-    ref.current.style.display = ref.current.style.display === "flex" ? "none" : "flex"
-}

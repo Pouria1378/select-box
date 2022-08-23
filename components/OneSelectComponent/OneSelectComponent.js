@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 const OneSelectComponent = ({ title, data }) => {
 
     const getSelectedItems = (selectedItems) => {
-        console.log('====================================');
-        console.log("selectedItems from OneSelectComponent", selectedItems);
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log("selectedItems from OneSelectComponent", selectedItems);
+        // console.log('====================================');
     }
 
     return (
