@@ -49,7 +49,6 @@ const SelectBox = ({
 
         } else {
             // update dropDownData that store all data in 
-            console.log("yes");
             setdropDownData(prev => {
                 return prev.map(item => {
                     if (item.id === selectedOption.id) {
@@ -58,6 +57,7 @@ const SelectBox = ({
 
                     return multiSelect ? item : ({ ...item, checked: false })
                 })
+                    .sort(sortByName)
                     .sort(sortByChecked)
             })
 
