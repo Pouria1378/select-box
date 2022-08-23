@@ -23,11 +23,6 @@ const SelectBox = ({
     }, [data])
 
     useEffect(() => {
-        // setstate selectedItems for fun. that need these items
-        setSelectedItems(dropDownData.filter(coin => coin.checked))
-    }, [dropDownData])
-
-    useEffect(() => {
         // after setSelectedItems called this useeffect will work and pass data to getSelectedItems fun. from parent
         getSelectedItems(selectedItems)
     }, [selectedItems])
@@ -37,25 +32,36 @@ const SelectBox = ({
     const handleClick = (selectedOption) => {
         if (selectedOption.checked) {
             // when clicked on input type checkbox
-            // first update dropDownData that store all data in 
+            // update dropDownData that store all data in and then sort by name and checked 
             setdropDownData(prev =>
-                prev.map(coin =>
-                    coin.id === selectedOption.id
-                        ? ({ ...coin, checked: false })
-                        : coin
-                ).sort(sortByName).sort(sortByChecked))
+                prev.map(item =>
+                    item.id === selectedOption.id
+                        ? ({ ...item, checked: false })
+                        : item
+                )
+                    .sort(sortByName)
+                    .sort(sortByChecked)
+            )
+
+            // setstate and remove unselected item from selected items
+            setSelectedItems(prev => prev.filter(item => item.id !== selectedOption.id))
 
         } else {
-            // first update dropDownData that store all data in 
+            // update dropDownData that store all data in 
+            console.log("yes");
             setdropDownData(prev => {
-                return prev.map(coin => {
-                    if (coin.id === selectedOption.id) {
-                        return { ...coin, checked: true }
+                return prev.map(item => {
+                    if (item.id === selectedOption.id) {
+                        return { ...item, checked: true }
                     }
 
-                    return multiSelect ? coin : ({ ...coin, checked: false })
-                }).sort(sortByChecked)
+                    return multiSelect ? item : ({ ...item, checked: false })
+                })
+                    .sort(sortByChecked)
             })
+
+            // setState SelectedItems and add new selected item from selected items
+            setSelectedItems(prev => ([...prev, selectedOption]))
         }
     }
 
