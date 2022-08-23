@@ -16,6 +16,9 @@ export default function Home(props) {
   }, [props.data])
 
 
+  if (props.data.error) {
+    return <h1>{props.data.error}</h1>
+  }
   return (
     <div>
       <Head>
@@ -45,7 +48,10 @@ export async function getServerSideProps(context) {
     .then(response => {
       data = response
     })
-    .catch(error => console.eror("error ", error))
+    .catch(error => {
+      console.log("error ", error)
+      data = { error: "Fetching data failed ..." }
+    })
 
   return {
     props: {
