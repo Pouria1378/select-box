@@ -17,7 +17,7 @@ export default function Home(props) {
 
 
   if (props.data.error) {
-    return <h1>{props.data.error}</h1>
+    return <h2>{props.data.error}</h2>
   }
   return (
     <div>

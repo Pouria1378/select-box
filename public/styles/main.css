@@ -449,6 +449,15 @@ main {
   height: 100vh;
 }
 
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 2rem;
+  color: #ff1313;
+}
+
 .SelectBoxWrapper {
   position: relative;
   width: -webkit-fit-content;
