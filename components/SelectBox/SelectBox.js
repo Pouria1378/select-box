@@ -8,7 +8,7 @@ const SelectBox = ({
     getSelectedItems,
     title
 }) => {
-    const SelectBoxWrapperRef = useRef(null);
+    const selectBoxWrapperRef = useRef(null);
     const dropDownRef = useRef(null);
 
     const [dropDownData, setdropDownData] = useState([])
@@ -35,45 +35,41 @@ const SelectBox = ({
 
 
 
-    const handleClick = (selectedCoin) => {
-        if (selectedCoin.checked) {
-            setdropDownData(prev => {
-                return prev.map(coin => {
-                    if (coin.id === selectedCoin.id) {
-                        return { ...coin, checked: false }
-                    }
-                    return coin
-                })
-            })
+    const handleClick = (selectedOption) => {
+        if (selectedOption.checked) {
+            setdropDownData(prev =>
+                prev.map(coin =>
+                    coin.id === selectedOption.id
+                        ? ({ ...coin, checked: false })
+                        : coin
+                ))
 
-            setSearchState(prev => {
-                return prev.map(coin => {
-                    if (coin.id === selectedCoin.id) {
-                        return { ...coin, checked: false }
-                    }
-                    return coin
-                })
-            })
+            setSearchState(prev =>
+                prev.map(coin =>
+                    coin.id === selectedOption.id
+                        ? ({ ...coin, checked: false })
+                        : coin)
+            )
         } else {
             setdropDownData(prev => {
                 return prev.map(coin => {
-                    if (coin.id === selectedCoin.id) {
+                    if (coin.id === selectedOption.id) {
                         return { ...coin, checked: true }
                     }
 
                     if (multiSelect) return coin
-                    else return { ...coin, checked: false }
+                    return { ...coin, checked: false }
                 })
             })
 
             setSearchState(prev => {
                 return prev.map(coin => {
-                    if (coin.id === selectedCoin.id) {
+                    if (coin.id === selectedOption.id) {
                         return { ...coin, checked: true }
                     }
 
                     if (multiSelect) return coin
-                    else return { ...coin, checked: false }
+                    return { ...coin, checked: false }
                 })
             })
         }
@@ -81,7 +77,7 @@ const SelectBox = ({
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (SelectBoxWrapperRef.current && !SelectBoxWrapperRef.current.contains(event.target)) {
+            if (selectBoxWrapperRef.current && !selectBoxWrapperRef.current.contains(event.target)) {
                 dropDownRef.current.style.display = "none"
             }
         }
@@ -89,7 +85,7 @@ const SelectBox = ({
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [SelectBoxWrapperRef]);
+    }, [selectBoxWrapperRef]);
 
     const search = (value = "") => {
         setSearchState(dropDownData.filter(item =>
@@ -103,7 +99,7 @@ const SelectBox = ({
 
     return (
         <div
-            ref={SelectBoxWrapperRef}
+            ref={selectBoxWrapperRef}
             className={`SelectBoxWrapper ${selectedItems.length ? "active" : ""}`}
         >
             <div
