@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { search, showHideComponent } from '../functions';
+import { showHideComponent } from '../functions';
 
 const SelectBox = ({
     data,
@@ -33,6 +33,10 @@ const SelectBox = ({
     useEffect(() => {
         getSelectedItems(selectedItems)
     }, [selectedItems])
+
+    useEffect(() => {
+        console.log("filteredDropDownData", filteredDropDownData);
+    }, [filteredDropDownData])
 
 
     const handleClick = (selectedCoin) => {
@@ -72,6 +76,10 @@ const SelectBox = ({
         };
     }, [SelectBoxWrapperRef]);
 
+    const search = (value) => {
+        setFilteredDropDownData(dropDownData.filter(item => (item.name.toLowerCase()).search(value.toLowerCase()) >= 0 ? item : null))
+    }
+
     return (
         <div
             ref={SelectBoxWrapperRef}
@@ -97,7 +105,7 @@ const SelectBox = ({
                     type="text"
                     placeholder={`Search ${title}`}
                     ref={dropDownInputRef}
-                    onKeyUp={() => search(dropDownInputRef, optionsRef)}
+                    onChange={(e) => search(e.target.value)}
                     className="inputDropDown"
                 />
                 <div
