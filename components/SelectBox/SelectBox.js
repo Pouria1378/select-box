@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { sortByChecked, sortByName } from '../functions';
+import { sortArrayByNameByChecked } from "../functions"
 
 const SelectBox = ({
     data,
@@ -28,8 +28,6 @@ const SelectBox = ({
         getSelectedItems(selectedItems)
     }, [selectedItems])
 
-
-
     const handleClick = (selectedOption) => {
         if (selectedOption.checked) {
             // when clicked on input type checkbox
@@ -40,8 +38,7 @@ const SelectBox = ({
                         ? ({ ...item, checked: false })
                         : item
                 )
-                    .sort(sortByName)
-                    .sort(sortByChecked)
+                    .sort(sortArrayByNameByChecked)
             )
 
             // setstate and remove unselected item from selected items
@@ -57,8 +54,7 @@ const SelectBox = ({
 
                     return multiSelect ? item : ({ ...item, checked: false })
                 })
-                    .sort(sortByName)
-                    .sort(sortByChecked)
+                    .sort(sortArrayByNameByChecked)
             })
 
             // setState SelectedItems and add new selected item base on multiSelect

@@ -8,4 +8,25 @@ export const sortByName = (a, b) => {
     return 0;
 }
 
-export const sortByChecked = (a, b) => Number(b.checked) - Number(a.checked)
+
+export const sortArrayByNameByChecked = (a, b) => {
+    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return Number(a.checked) < Number(b.checked)
+            ? 1
+            : Number(a.checked) > Number(b.checked)
+                ? -1
+                : -1
+    }
+    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        return Number(a.checked) < Number(b.checked)
+            ? 1
+            : Number(a.checked) > Number(b.checked)
+                ? -1
+                : 1
+    }
+    return Number(a.checked) < Number(b.checked)
+        ? 1
+        : Number(a.checked) > Number(b.checked)
+            ? -1
+            : 0
+}
